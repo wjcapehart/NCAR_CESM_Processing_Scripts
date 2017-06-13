@@ -90,7 +90,7 @@ do rcpl = 0, 1
 
 
 
-      n_ens = 30
+      n_ens = 15; 30
       nens = n_ens
 
 

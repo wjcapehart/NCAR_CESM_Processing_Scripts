@@ -53,40 +53,34 @@ begin
       ;far_east  =  -52.00 + 360.0; degrees_east
 
 
-   parameters := (/ "QCHANR", \
-                   "SOILLIQ", \
-                   "TSA", \
-                   "ANN_FAREA_BURNED", \
-                   "FIRESEASONL", \
-                   "FLDS", \
-                   "FSDS", \
-                   "FSR", \
-                   "Q2M", \
-                   "RAIN", \
-                   "SNOW", \
-                   "SNOWLIQ", \
-                   "U10", \
-                   "WIND", \
-                   "ZWT", \
-                   "VOLR", \
-                   "TREFHT", \
+   parameters := (/ "Z500", \
+                   "PSL", \
+                   "QBOT", \
+                   "TREFHT",   \
                    "TREFHTMN", \
                    "TREFHTMX", \
-                   "PSL" /)
+                   "RAIN", \
+                   "SNOW", \
+                   "QRUNOFF", \
+                   "FSNO", \
+                   "H2OSNO", \
+                   "ZWT" /)
 
-   parameters := (/ \
-                    "PSL",       \
-                    "TREFHT",   \
-                    "TREFHTMN", \
-                    "TREFHTMX" \
-                    /)
-
-   root_dir    = "/projects/ECEP/CESM_Ensembles/CESM_LES_MES_ORIGINAL_OUTPUT/"
-   scratch_dir = "./scratch/"
-   final_dir   = "./"
+   parameters := (/   "PSL",      \
+                      "QBOT",     \
+                      "TREFHT",   \
+                      "TREFHTMN", \
+                      "TREFHTMX", \
+                      "RAIN",     \
+                      "SNOW"      /)
 
 
-do rcpl = 1, 1
+   final_dir   = "/glade/u/home/capehart/CESM_data/"
+   scratch_dir = final_dir + "scratch/"
+   root_dir_20th      = "/glade/p/cesmLE/CESM-CAM5-BGC-LE/"
+   post_root_dir_20th = "tseries/daily/"
+
+do rcpl = 0, 1
 
    rcp   = rcploop(rcpl)
 
@@ -94,18 +88,12 @@ do rcpl = 1, 1
 
    if (rcp  .eq.  "RCP85") then
 
-      time_full               = new( 1032+900+240, double)
-      time_full@units         = "days since 1920-01-01 00:00:00"
-      time_full@calendar      = "noleap"
-      time_full@bounds        = "time_bounds"
-      time_full!0             = "time_full"
+
 
       n_ens = 30
       nens = n_ens
 
-      nt00 = (/    0,       1032,     1032+900 /) * 365 / 12
-      nt01 = (/ 1032, 1032 + 900, 1032+900+240 /) * 365 / 12 - 1
-      nt   = (/ 1032,        900 ,         240 /) * 365 / 12
+
 
       root_dir    = "/glade/p/cesmLE/CESM-CAM5-BGC-LE/"
       post_root_dir = "tseries/daily/"
@@ -119,16 +107,16 @@ do rcpl = 1, 1
 
       part3 = ".clm2.h0."
 
-      part5 = (/ ".192001-200512.nc",  \
-                 ".200601-208012.nc",  \
-                 ".208101-210012.nc"  /)
+      part5 = (/ ".19200101-20051231.nc",  \
+                 ".20060101-20801231.nc",  \
+                 ".20810101-21001231.nc"  /)
 
       full_record = "CONUS_DAILY_1920-2100"
 
 
-      time_of_last_month = "66065"; RCP8.5
+      time_of_last_month = "66064"; "66065"; RCP8.5
 
-      scratchfile = "./deleteme85.nc"
+      scratchfile = "/glade/u/home/capehart/CESM_data/scratch/deleteme85.nc"
 
 
    else
@@ -136,34 +124,27 @@ do rcpl = 1, 1
       root_dir    = "/glade/p/ncgd0014/CESM-CAM5-BGC-ME/"
       post_root_dir = "tseries/daily/"
 
-      time_full               = new( 1032+900, double)
-      time_full@units         = "days since 1920-01-01 00:00:00"
-      time_full@calendar      = "noleap"
-      time_full@bounds        = "time_bounds"
-      time_full!0             = "time_full"
+
 
       n_ens = 15
       nens = n_ens
 
-      nt00 = (/    0,        1032 /) * 365 / 12
-      nt01 = (/ 1032, 1032 +  900 /) * 365 / 12 - 1
-      nt   = (/ 1032,         900 /) * 365 / 12
+
 
       part1 = (/ "b.e11.B20TRC5CNBDRD.f09_g16.",  \
                  "b.e11.BRCP45C5CNBDRD.f09_g16." /)
 
       part2 = sprinti("%0.3i", ispan(1,n_ens,1))
 
-      part3 = ".clm2.h0."
 
-      part5 = (/ ".192001-200512.nc",  \
-                 ".200601-208012.nc"  /)
+      part5 = (/ ".19200101-20051231.nc",  \
+                 ".20060101-20801231.nc"  /)
 
       full_record = "CONUS_1920-2080"
 
-      time_of_last_month = "58765"; RCP4.5
+      time_of_last_month =  "58764";"58765"; RCP4.5
 
-      scratchfile = "./deleteme45.nc"
+      scratchfile = "/glade/u/home/capehart/CESM_data/scratch/deleteme45.nc"
 
    end if
 
@@ -231,7 +212,7 @@ do rcpl = 1, 1
 
       if ((parameters(vf) .eq. "QCHANR").or.(parameters(vf) .eq. "VOLR")) then
          part3           = ".rtm.h1."
-         cesm_module_dir = "rof/"
+         cesm_module_dir = "rof/proc"
          prefix          = ""
       else
          if ((parameters(vf) .eq. "PSL"     ).or. \
@@ -241,10 +222,10 @@ do rcpl = 1, 1
              (parameters(vf) .eq. "TREFHTMN").or. \
              (parameters(vf) .eq. "TREFHTMX")) then
             part3           = ".cam.h1."
-            cesm_module_dir = "atm/"
+            cesm_module_dir = "atm/proc"
          else
             part3           = ".clm2.h1."
-            cesm_module_dir = "lnd/"
+            cesm_module_dir = "lnd/proc"
          end if
       end if
 
@@ -259,22 +240,27 @@ do rcpl = 1, 1
             system("rm -v " + scratchfile)
 
             string_year = part5(tf)
-            longone     = False
 
             if ((ef .eq. 0).and.(tf .eq. 0)) then
-               string_year = ".185001-200512.nc"
-               longone     = True
+               string_year = ".18500101-20051231.nc"
+               root_dir_w  = root_dir_20th
             else
-               string_year = part5(tf)
-               longone     = False
+               if (tf .eq. 0) then
+                  string_year = part5(tf)
+                  root_dir_w  = root_dir_20th
+               else
+                  string_year = part5(tf)
+                  root_dir_w  = root_dir
+               end if
             end if
 
-            cesm_filename = root_dir        + "/" + \
-                            cesm_module_dir + "/" + \
-                            post_root_dir   + "/" + \
+            cesm_filename = root_dir_w        +       \
+                            cesm_module_dir +     "/" +    \
+                            post_root_dir    +   \
+                            parameters(vf) +    "/" +  \
                             part1(tf)       +       \
                             part2(ef)       +       \
-                            part3           +       \
+                            part3           +    \
                             parameters(vf)  +       \
                             string_year
 
@@ -401,9 +387,24 @@ do rcpl = 1, 1
 
 
          else
-            nco_command = "ncap2 -s 'time=time-25550' "+ ens_001_file + " " + scratchfile
+
+            nco_command = "ncap2  -s 'time_bnds=time_bnds-25550' -s 'time=time-25550' "+ ens_001_file + " " + scratchfile
             print( " " + nco_command)
             system(" " + nco_command)
+
+            nco_command = "ncatted -O -a bounds,time,m,c,'time_bnds'  " + scratchfile
+            print( " " + nco_command)
+            system(" " + nco_command)
+
+            ; fix longname for time_bounds scratch -> scratch
+
+            nco_command = "ncatted -O -a long_name,time_bnds,m,c,'history time interval endpoints'  " + scratchfile
+            print( " " + nco_command)
+            system(" " + nco_command)
+
+
+
+
          end if
 
          ; wipe out ens_001_file
@@ -445,7 +446,7 @@ do rcpl = 1, 1
          ; fix timebound coordinate for time scratch -> scratch
          ; clip the time series for ensemble 1 to start at 1920 scratch->ens_001_file
 
-         nco_command = "ncea  -d time,31.,"+time_of_last_month+".  " + scratchfile +  " " + ens_001_file
+         nco_command = "ncea  -d time,00.,"+time_of_last_month+".  " + scratchfile +  " " + ens_001_file
          print( " " + nco_command)
          system(" " + nco_command)
 
@@ -501,7 +502,7 @@ do rcpl = 1, 1
       system(" $NETCDF/bin/ncdump -h " + ens_all_file+"4")
 
    end do
-   delete([/ time_full, nt00,nt01,nt,part1,part2,part3,part5, ensemble_member /])
+   delete([/ part1,part2,part3,part5, ensemble_member /])
 
 end do
 

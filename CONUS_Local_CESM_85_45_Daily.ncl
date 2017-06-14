@@ -74,6 +74,8 @@ begin
                       "RAIN",     \
                       "SNOW"      /)
 
+                         parameters := (/   "PSL" /)
+
 
    final_dir   = "/glade/u/home/capehart/CESM_data/"
    scratch_dir = final_dir + "scratch/"

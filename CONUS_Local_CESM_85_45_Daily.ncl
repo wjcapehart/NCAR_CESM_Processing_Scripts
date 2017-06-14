@@ -53,18 +53,10 @@ begin
       ;far_east  =  -52.00 + 360.0; degrees_east
 
 
-   parameters := (/ "PSL", \
-                   "QBOT", \
-                   "TREFHT",   \
-                   "TREFHTMN", \
-                   "TREFHTMX", \
-                   "RAIN", \
-                   "SNOW", \
-                   "Z500", \
-                   "QRUNOFF", \
-                   "FSNO", \
-                   "H2OSNO", \
-                   "ZWT" /)
+   parameters := (/  "Z500",    \
+                     "QRUNOFF", \
+                     "FSNO",    \
+                     "H2OSNO"   /)
 
    parameters := (/ "RAIN",     \
                     "SNOW",     \

@@ -1,7 +1,5 @@
 /glade/p/cesmLE/CESM-CAM5-BGC-LE/rof/proc/tseries/daily
 
-
-
 .:
 QCHANR
 VOLR

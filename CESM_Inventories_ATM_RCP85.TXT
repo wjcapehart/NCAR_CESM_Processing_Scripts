@@ -1,8 +1,5 @@
 /glade/p/cesmLE/CESM-CAM5-BGC-LE/atm/proc/tseries/daily
 
-
-
-
 .:
 bc_a1_SRF
 dst_a1_SRF

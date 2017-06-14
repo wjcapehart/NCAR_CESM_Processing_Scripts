@@ -53,28 +53,28 @@ begin
       ;far_east  =  -52.00 + 360.0; degrees_east
 
 
-   parameters := (/ "Z500", \
-                   "PSL", \
+   parameters := (/ "PSL", \
                    "QBOT", \
                    "TREFHT",   \
                    "TREFHTMN", \
                    "TREFHTMX", \
                    "RAIN", \
                    "SNOW", \
+                   "Z500", \
                    "QRUNOFF", \
                    "FSNO", \
                    "H2OSNO", \
                    "ZWT" /)
 
-   parameters := (/   "PSL",      \
-                      "QBOT",     \
-                      "TREFHT",   \
-                      "TREFHTMN", \
-                      "TREFHTMX", \
-                      "RAIN",     \
-                      "SNOW"      /)
+   parameters := (/ "RAIN",     \
+                    "SNOW",     \
+                    "TREFHT",   \
+                    "TREFHTMN", \
+                    "TREFHTMX", \
+                    "QBOT",     \
+                    "PSL"        /)
 
-                         parameters := (/   "PSL" /)
+                   ; parameters := (/  "PSL"        /)
 
 
    final_dir   = "/glade/u/home/capehart/CESM_data/"
@@ -92,7 +92,7 @@ do rcpl = 0, 1
 
 
 
-      n_ens = 2; 30
+      n_ens = 15; 30
       nens = n_ens
 
 
@@ -128,7 +128,7 @@ do rcpl = 0, 1
 
 
 
-      n_ens = 2
+      n_ens = 15
       nens = n_ens
 
 
@@ -360,7 +360,7 @@ do rcpl = 0, 1
                       "e*"                 + \
                       ".nc"
 
-      ens_all_file = scratch_dir             + \
+      ens_all_file = final_dir             + \
                      parameters(vf)    + "_" + \
                      rcp               + "_" + \
                      full_record             + \
@@ -477,9 +477,9 @@ do rcpl = 0, 1
 
          ; swap the ensemble and time dimensions complete_ensemble file -> scratch
 
-         nco_command = "ncpdq  -a time,ensemble " + ens_all_file + "  " + scratchfile
-         print( " " + nco_command)
-         system(" " + nco_command)
+         ;nco_command = "ncpdq  -a time,ensemble " + ens_all_file + "  " + scratchfile
+         ;print( " " + nco_command)
+         ;system(" " + nco_command)
 
          ; clean scratch files
 
@@ -488,13 +488,15 @@ do rcpl = 0, 1
 
          ; replace scratch->complete_ensemble
 
-         print( " mv -v " + scratchfile + " " + ens_all_file)
-         system(" mv -v " + scratchfile + " " + ens_all_file)
+         ;print( " mv -v " + scratchfile + " " + ens_all_file)
+         ;system(" mv -v " + scratchfile + " " + ens_all_file)
 
          ; nccopy classic netcdf v3 to netcdf v4
 
-         print( " nccopy -u -4 -d 5 " + ens_all_file + " " + ens_all_file+"4")
-         system(" nccopy -u -4 -d 5 " + ens_all_file + " " + ens_all_file+"4")
+         netcdf_command = " nccopy -u -k 3 -d 5 " + ens_all_file + " " + ens_all_file+"4"
+         print( " " + netcdf_command)
+         system(" " + netcdf_command)
+
          print( " rm -v " + ens_all_file)
          system(" rm -v " + ens_all_file)
 

@@ -90,7 +90,7 @@ do rcpl = 0, 1
 
 
 
-      n_ens = 15; 30
+      n_ens = 2; 30
       nens = n_ens
 
 
@@ -126,7 +126,7 @@ do rcpl = 0, 1
 
 
 
-      n_ens = 15
+      n_ens = 2
       nens = n_ens
 
 
@@ -491,15 +491,15 @@ do rcpl = 0, 1
 
          ; nccopy classic netcdf v3 to netcdf v4
 
-         print( " $NETCDF/bin/nccopy -u -4 -d 5 " + ens_all_file + " " + ens_all_file+"4")
-         system(" $NETCDF/bin/nccopy -u -4 -d 5 " + ens_all_file + " " + ens_all_file+"4")
+         print( " nccopy -u -4 -d 5 " + ens_all_file + " " + ens_all_file+"4")
+         system(" nccopy -u -4 -d 5 " + ens_all_file + " " + ens_all_file+"4")
          print( " rm -v " + ens_all_file)
          system(" rm -v " + ens_all_file)
 
 
       ;; done!
-      print( " $NETCDF/bin/ncdump -h " + ens_all_file+"4")
-      system(" $NETCDF/bin/ncdump -h " + ens_all_file+"4")
+      print( " ncdump -h " + ens_all_file+"4")
+      system(" ncdump -h " + ens_all_file+"4")
 
    end do
    delete([/ part1,part2,part3,part5, ensemble_member /])

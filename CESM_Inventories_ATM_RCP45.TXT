@@ -1,7 +1,5 @@
 /glade/p/ncgd0014/CESM-CAM5-BGC-ME/atm/proc/tseries/daily
 
-
-
 .:
 FLNS
 FLNSC

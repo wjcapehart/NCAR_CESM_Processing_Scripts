@@ -369,7 +369,7 @@ do rcpl = 0, 1
          ; move zero date from 1850 to 1920 for the first ensemble ens_001 -> scratch
 
 
-         if (part3 .ne. ".cam.h0.") then
+         if (part3 .ne. ".cam.h1.") then
 
             nco_command = "ncap2  -s 'time_bounds=time_bounds-25550' -s 'time=time-25550' "+ ens_001_file + " " + scratchfile
             print( " " + nco_command)

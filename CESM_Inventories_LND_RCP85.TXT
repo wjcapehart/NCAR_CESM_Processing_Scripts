@@ -1,8 +1,4 @@
-
-
-master directory /glade/p/cesmLE/CESM-CAM5-BGC-LE/lnd/proc/tseries/daily
-
-full inventory...
+/glade/p/cesmLE/CESM-CAM5-BGC-LE/lnd/proc/tseries/daily
 
 .:
 FSNO  H2OSNO  QRUNOFF  RAIN  SNOW  SOILWATER_10CM  TREFMNAV_R  TREFMNAV_U  TREFMXAV_R  TREFMXAV_U

@@ -66,6 +66,11 @@ begin
                     "QBOT",     \
                     "PSL"        /)
 
+
+parameters := (/ "TREFHTMN" \
+                        /)
+
+
                    ; parameters := (/  "PSL"        /)
 
 
@@ -134,7 +139,7 @@ do rcpl = 0, 1
       part5 = (/ ".19200101-20051231.nc",  \
                  ".20060101-20801231.nc"  /)
 
-      full_record = "CONUS_1920-2080"
+      full_record = "CONUS_DAILY_1920-2080"
 
       time_of_last_month =  "58764";"58765"; RCP4.5
 

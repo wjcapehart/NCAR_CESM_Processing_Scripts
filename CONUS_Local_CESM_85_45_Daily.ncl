@@ -9,7 +9,7 @@ begin
  ;   setfileoption("nc", "FileStructure", "Advanced")
  ;   setfileoption("nc", "Format",  "NetCDF4")
 
-
+system("rm -frv /glade/u/home/capehart/CESM_data/scratch/deleteme85.nc /glade/u/home/capehart/CESM_data/scratch/deleteme45.nc")
    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
    ;
    ;  User Modification Area
@@ -82,6 +82,9 @@ parameters := (/ "TREFHTMN" \
 do rcpl = 0, 1
 
    rcp   = rcploop(rcpl)
+
+   print("=============================================")
+   print("Processing "+rcp)
 
 
 
@@ -186,7 +189,10 @@ do rcpl = 0, 1
 
    do vf = 0, n_parameters-1
 
-      print(parameters(vf))
+      print("_____________________________________________")
+      print("  Processing "+rcp+" "+parameters(vf))
+
+
       if ((parameters(vf) .eq. "QCHANR").or.(parameters(vf) .eq. "VOLR"))  then
          nco_spatial_extraction_string = " -d lat,"                  + \
                                           sprintf("%5.2f",far_south) + \
@@ -228,13 +234,17 @@ do rcpl = 0, 1
          end if
       end if
 
-      system("rm -v " + scratchfile)
 
       do ef = 0, n_ens-1
 
-         system("rm -v " + scratchfile)
+         print("---------------------------------------------")
+         print("     Processing "+rcp+" "+parameters(vf)+" ens"+sprinti("e%0.3i", (ef + 1)))
 
          do tf = 0, n_timefiles-1
+
+            print("- - - - - - - - - - - - - - - - - - - - - - -")
+            print("        Processing "+rcp+" "+parameters(vf)+" ens"+sprinti("e%0.3i", (ef + 1))+" t"+sprinti("e%0.2i", (tf + 1)))
+
 
             system("rm -v " + scratchfile)
 
@@ -295,7 +305,7 @@ do rcpl = 0, 1
                print( " " + nco_command)
                system(" " + nco_command)
 
-               print( "rm -v " + scratchfile)
+               print( "scratch -> temp_000 :: rm -v " + scratchfile)
                system("rm -v " + scratchfile)
 
 
@@ -321,7 +331,7 @@ do rcpl = 0, 1
 
          ; remove the temp_000
 
-         print( " rm -frv " + temp_files)
+         print( "RM: rm -frv " + temp_files)
          system(" rm -frv " + temp_files)
 
       end do
@@ -344,6 +354,9 @@ do rcpl = 0, 1
       ;;  ncecat ANN_FAREA_BURNED_RCP85_e00*.nc ANN_FAREA_BURNED_RCP85_CONUS.nc
       ;;
       ;;  ncrename -O -d record,ensemble  ANN_FAREA_BURNED_RCP85_CONUS.nc
+      print("_____________________________________________")
+      print("  Consolidating "+rcp+" "+parameters(vf))
+
 
       ens_001_file = scratch_dir          + \
                      parameters(vf) + "_" + \
@@ -407,7 +420,7 @@ do rcpl = 0, 1
          end if
 
          ; wipe out ens_001_file
-
+         print("RM: rm -v "+ ens_001_file)
          system("rm -v "+ ens_001_file)
 
          ; fix long name for time scratch -> scratch
@@ -451,7 +464,7 @@ do rcpl = 0, 1
 
          ; remove series scratchfile
 
-         print( " rm -frv " + scratchfile)
+         print( "RM: ncea  -d time,00.,"+time_of_last_month+". :: rm -frv " + scratchfile)
          system(" rm -frv " + scratchfile)
 
          ; concatenate by all ensemble member into a single file ens_0xx_files->complete_ensemble
@@ -480,7 +493,7 @@ do rcpl = 0, 1
 
          ; clean scratch files
 
-         print( " rm -v " + ens_0xx_files)
+         print( "RM: rm -v " + ens_0xx_files)
          system(" rm -v " + ens_0xx_files)
 
          ; replace scratch->complete_ensemble
@@ -494,7 +507,7 @@ do rcpl = 0, 1
          print( " " + netcdf_command)
          system(" " + netcdf_command)
 
-         print( " rm -v " + ens_all_file)
+         print( "RM: rm -v " + ens_all_file)
          system(" rm -v " + ens_all_file)
 
 

@@ -290,7 +290,7 @@ do rcpl = 0, 1
                           scratchfile
 
             print( " " + nco_command)
-            system(" " + nco_command)
+            system(" nohup " + nco_command)
 
 
             ; extract variable from clipped file scratch -> temp_000
@@ -303,7 +303,7 @@ do rcpl = 0, 1
                               temp_file
 
                print( " " + nco_command)
-               system(" " + nco_command)
+               system(" nohup " + nco_command)
 
                print( "scratch -> temp_000 :: rm -v " + scratchfile)
                system("rm -v " + scratchfile)
@@ -327,7 +327,7 @@ do rcpl = 0, 1
 
          nco_command = "ncrcat -h " + temp_files + " " + ens_file
          print( " " + nco_command)
-         system(" " + nco_command)
+         system(" nohup " + nco_command)
 
          ; remove the temp_000
 
@@ -385,34 +385,34 @@ do rcpl = 0, 1
 
             nco_command = "ncap2  -s 'time_bounds=time_bounds-25550' -s 'time=time-25550' "+ ens_001_file + " " + scratchfile
             print( " " + nco_command)
-            system(" " + nco_command)
+            system(" nohup " + nco_command)
 
             nco_command = "ncatted -O -a bounds,time,m,c,'time_bounds'  " + scratchfile
             print( " " + nco_command)
-            system(" " + nco_command)
+            system(" nohup " + nco_command)
 
             ; fix longname for time_bounds scratch -> scratch
 
             nco_command = "ncatted -O -a long_name,time_bounds,m,c,'history time interval endpoints'  " + scratchfile
             print( " " + nco_command)
-            system(" " + nco_command)
+            system(" nohup " + nco_command)
 
 
          else
 
             nco_command = "ncap2  -s 'time_bnds=time_bnds-25550' -s 'time=time-25550' "+ ens_001_file + " " + scratchfile
             print( " " + nco_command)
-            system(" " + nco_command)
+            system(" nohup " + nco_command)
 
             nco_command = "ncatted -O -a bounds,time,m,c,'time_bnds'  " + scratchfile
             print( " " + nco_command)
-            system(" " + nco_command)
+            system(" nohup " + nco_command)
 
             ; fix longname for time_bounds scratch -> scratch
 
             nco_command = "ncatted -O -a long_name,time_bnds,m,c,'history time interval endpoints'  " + scratchfile
             print( " " + nco_command)
-            system(" " + nco_command)
+            system(" nohup " + nco_command)
 
 
 
@@ -427,19 +427,19 @@ do rcpl = 0, 1
 
          nco_command = "ncatted -O -a long_name,time,m,c,'time'  " + scratchfile
          print( " " + nco_command)
-         system(" " + nco_command)
+         system(" nohup " + nco_command)
 
          ; fix units for time scratch -> scratch
 
          nco_command = "ncatted -O -a units,time,m,c,'days since 1920-01-01 00:00:00'  " + scratchfile
          print( " " + nco_command)
-         system(" " + nco_command)
+         system(" nohup " + nco_command)
 
          ; fix calendar for time scratch -> scratch
 
          nco_command = "ncatted -O -a calendar,time,m,c,'noleap'  " + scratchfile
          print( " " + nco_command)
-         system(" " + nco_command)
+         system(" nohup " + nco_command)
 
 
          ; add coordinate attribute
@@ -448,11 +448,11 @@ do rcpl = 0, 1
          if (parameters(vf) .eq. "SOILLIQ") then
             nco_command = "ncatted -O -a coordinate,"+parameters(vf)+",m,c,'time levgrnd latitude longitude'  " + scratchfile
             print( " " + nco_command)
-            system(" " + nco_command)
+            system(" nohup " + nco_command)
          else
             nco_command = "ncatted -O -a coordinate,"+parameters(vf)+",m,c,'time latitude longitude'  " + scratchfile
             print( " " + nco_command)
-            system(" " + nco_command)
+            system(" nohup " + nco_command)
          end if
 
          ; fix timebound coordinate for time scratch -> scratch
@@ -460,7 +460,7 @@ do rcpl = 0, 1
 
          nco_command = "ncea  -d time,00.,"+time_of_last_month+".  " + scratchfile +  " " + ens_001_file
          print( " " + nco_command)
-         system(" " + nco_command)
+         system(" nohup " + nco_command)
 
          ; remove series scratchfile
 
@@ -471,25 +471,25 @@ do rcpl = 0, 1
 
          nco_command = "ncecat "+ ens_0xx_files + " " + ens_all_file
          print( " " + nco_command)
-         system(" " + nco_command)
+         system(" nohup " + nco_command)
 
          ; add longname attribute to the time attribute complete_ensemble->complete_ensemble
 
          nco_command = "ncatted -O -a long_name,time,m,c,'time' " + ens_all_file
          print( " " + nco_command)
-         system(" " + nco_command)
+         system(" nohup " + nco_command)
 
          ; change the name of the record dimension from 'record' to 'ensemble' complete_ensemble->complete_ensemble
 
          nco_command = "ncrename -O -d record,ensemble " + ens_all_file
          print( " " + nco_command)
-         system(" " + nco_command)
+         system(" nohup " + nco_command)
 
          ; swap the ensemble and time dimensions complete_ensemble file -> scratch
 
          ;nco_command = "ncpdq  -a time,ensemble " + ens_all_file + "  " + scratchfile
          ;print( " " + nco_command)
-         ;system(" " + nco_command)
+         ;system(" nohup " + nco_command)
 
          ; clean scratch files
 
@@ -505,7 +505,7 @@ do rcpl = 0, 1
 
          netcdf_command = " nccopy -u -k 3 -d 5 " + ens_all_file + " " + ens_all_file+"4"
          print( " " + netcdf_command)
-         system(" " + netcdf_command)
+         system(" nohup " + netcdf_command)
 
          print( "RM: rm -v " + ens_all_file)
          system(" rm -v " + ens_all_file)
@@ -513,7 +513,7 @@ do rcpl = 0, 1
 
       ;; done!
       print( " ncdump -h " + ens_all_file+"4")
-      system(" ncdump -h " + ens_all_file+"4")
+      system(" nohup ncdump -h " + ens_all_file+"4")
 
    end do
    delete([/ part1,part2,part3,part5, ensemble_member /])

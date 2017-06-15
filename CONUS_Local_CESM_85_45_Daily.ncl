@@ -67,7 +67,7 @@ system("rm -frv /glade/u/home/capehart/CESM_data/scratch/deleteme85.nc /glade/u/
                     "PSL"        /)
 
 
-parameters := (/ "TREFHTMN" \
+parameters := (/ "TREFHTMX" \
                         /)
 
 
@@ -398,6 +398,9 @@ do rcpl = 0, 1
             system(" nohup " + nco_command)
 
 
+
+
+
          else
 
             nco_command = "ncap2  -s 'time_bnds=time_bnds-25550' -s 'time=time-25550' "+ ens_001_file + " " + scratchfile
@@ -418,6 +421,7 @@ do rcpl = 0, 1
 
 
          end if
+
 
          ; wipe out ens_001_file
          print("RM: rm -v "+ ens_001_file)

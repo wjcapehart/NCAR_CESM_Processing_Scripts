@@ -29,7 +29,7 @@ source /glade/u/apps/opt/lmod/4.2.1/init/tcsh
 module load ncl
 module load nco
 
-ncl /glade/u/home/capehart/code/NCAR_CESM_Processing_Scripts/CONUS_Local_CESM_85_45_Daily.ncl >& /glade/u/home/capehart/code/NCAR_CESM_Processing_Scripts/CONUS_Local_CESM_85_45_Daily.txt
+ncl /glade/u/home/capehart/code/NCAR_CESM_Processing_Scripts/POINT_Local_CESM_85_45_Daily.ncl >& /glade/u/home/capehart/code/NCAR_CESM_Processing_Scripts/POINT_Local_CESM_85_45_Daily.txt
 
 
 

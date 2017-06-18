@@ -67,11 +67,6 @@ system("rm -frv /glade/u/home/capehart/CESM_data/scratch/deleteme85.nc /glade/u/
                     "PSL"        /)
 
 
-parameters := (/ "TREFHTMX" \
-                        /)
-
-
-                   ; parameters := (/  "PSL"        /)
 
 
    final_dir   = "/glade/u/home/capehart/CESM_data/"
@@ -79,7 +74,7 @@ parameters := (/ "TREFHTMX" \
    root_dir_20th      = "/glade/p/cesmLE/CESM-CAM5-BGC-LE/"
    post_root_dir_20th = "tseries/daily/"
 
-do rcpl = 0, 1
+do rcpl = 1 , 1
 
    rcp   = rcploop(rcpl)
 

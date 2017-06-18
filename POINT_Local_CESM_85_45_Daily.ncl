@@ -9,7 +9,6 @@ begin
  ;   setfileoption("nc", "FileStructure", "Advanced")
  ;   setfileoption("nc", "Format",  "NetCDF4")
 
-system("rm -frv /glade/u/home/capehart/CESM_data/scratch/deleteme85.nc /glade/u/home/capehart/CESM_data/scratch/deleteme45.nc")
    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
    ;
    ;  User Modification Area
@@ -70,6 +69,7 @@ system("rm -frv /glade/u/home/capehart/CESM_data/scratch/deleteme85.nc /glade/u/
       ;far_east  =  -52.00 + 360.0; degrees_east
 
 
+
    parameters := (/  "QRUNOFF",         \
                      "FSNO",            \
                      "H2OSNO",          \
@@ -89,7 +89,24 @@ system("rm -frv /glade/u/home/capehart/CESM_data/scratch/deleteme85.nc /glade/u/
 
 
 
-                   ; parameters := (/  "PSL"        /)
+   parameters := (/  "TREFHT",          \
+                     "TREFHTMN",        \
+                     "TREFHTMX",        \
+                     "PRECTMX",         \
+                     "PRECT",           \
+                     "QBOT",           \
+                     "PSL",             \
+                     "QRUNOFF",         \
+                     "FSNO",            \
+                     "H2OSNO",          \
+                     "SOILWATER_10CM",  \
+                     "RAIN",            \
+                     "SNOW",            \
+                     "UBOT",            \
+                     "VBOT"           /)
+
+
+
 
 
    final_dir          = "/glade/u/home/capehart/CESM_data/"
@@ -97,9 +114,15 @@ system("rm -frv /glade/u/home/capehart/CESM_data/scratch/deleteme85.nc /glade/u/
    root_dir_20th      = "/glade/p/cesmLE/CESM-CAM5-BGC-LE/"
    post_root_dir_20th = "tseries/daily/"
 
-do rcpl = 0, 1
+do rcpl = 1,1
 
    rcp   = rcploop(rcpl)
+
+   if (rcpl .eq. 0) then
+       system("rm -frv /glade/u/home/capehart/CESM_data/scratch/deleteme45.nc")
+   else
+       system("rm -frv /glade/u/home/capehart/CESM_data/scratch/deleteme85.nc")
+   end if
 
    print("=============================================")
    print("Processing "+rcp)

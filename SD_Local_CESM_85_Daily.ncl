@@ -106,6 +106,15 @@ begin
                      "VBOT"           /)
 
 
+   parameters := (/  "FSNO",    \
+                     "H2OSNO", \
+                     "SOILWATER_10CM",  \
+                     "RAIN",            \
+                     "SNOW",            \
+                     "UBOT",            \
+                     "VBOT"           /)
+
+
 
 
 

@@ -105,7 +105,10 @@ begin
                      "UBOT",            \
                      "VBOT"           /)
 
-
+   parameters := (/  "FSNO",    \
+                     "H2OSNO", \
+                      "SOILWATER_10CM")
+ 
 
 
 
